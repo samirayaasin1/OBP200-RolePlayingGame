@@ -103,16 +103,16 @@ class Program
         // Fyll player-array
         Player[0] = name;
         Player[1] = cls;
-        Player[2] = hp.ToString();
-        Player[3] = maxhp.ToString();
         Player[4] = atk.ToString();
         Player[5] = def.ToString();
         Player[6] = gold.ToString();
         Player[7] = "0";   // XP
         Player[8] = "1";   // LEVEL
-        Player[9] = potions.ToString();
         Player[10] = "Wooden Sword;Cloth Armor"; // inventory som semicolon-separerad sträng
-
+        
+        // Ny kod (Samira)
+        player = new Player(hp, maxhp, potions);
+            
         // Initiera karta (linjärt äventyr)
         Rooms.Clear();
         Rooms.Add(new[] { "battle", "Skogsstig" });
@@ -232,7 +232,8 @@ class Program
             }
             else if (cmd == "P")
             {
-                UsePotion();
+
+                player.UsePotion();
             }
             else if (cmd == "R" && !isBoss)
             {
@@ -414,26 +415,6 @@ class Program
         int hp = ParseInt(Player[2], 0);
         hp -= Math.Max(0, dmg);
         Player[2] = Math.Max(0, hp).ToString();
-    }
-
-    static void UsePotion()
-    {
-        int pot = ParseInt(Player[9], 0);
-        if (pot <= 0)
-        {
-            Console.WriteLine("Du har inga drycker kvar.");
-            return;
-        }
-        int hp = ParseInt(Player[2], 0);
-        int maxhp = ParseInt(Player[3], 1);
-
-        // Helning av spelaren
-        int heal = 12;
-        int newHp = Math.Min(maxhp, hp + heal);
-        Player[2] = newHp.ToString();
-        Player[9] = (pot - 1).ToString();
-
-        Console.WriteLine($"Du dricker en dryck och återfår {newHp - hp} HP.");
     }
 
     static bool TryRunAway()
