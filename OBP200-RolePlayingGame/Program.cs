@@ -5,6 +5,7 @@ namespace OBP200_RolePlayingGame;
 
 class Program
 {
+    private static Player player;
     // ======= Globalt tillstånd  =======
 
     // Spelarens "databas": alla värden som strängar
