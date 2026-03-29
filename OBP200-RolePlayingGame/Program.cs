@@ -4,6 +4,7 @@
 namespace OBP200_RolePlayingGame;
 
 
+
 class Program
 {
     private static Player player;
@@ -233,9 +234,11 @@ class Program
             }
             else if (cmd == "P")
             {
+                
 
-                player.UsePotion();
-
+                IItem potion = new Potion();
+                potion.Use(player);
+                
                 Player[2] = player.Hp.ToString();
                 Player[9] = player.Potions.ToString();
 
