@@ -6,6 +6,8 @@ public class Player
     public int Hp { get; private set; }
     public int Potions { get; private set; }
 
+    private const int PotionHealAmount = 12;
+
     public Player(int maxHP, int hp, int potions)
     {
         MaxHp = maxHP;
@@ -23,7 +25,7 @@ public class Player
 
         int oldHp = Hp;
 
-        Hp = Math.Min(MaxHp, Hp + 12);
+        Hp = Math.Min(MaxHp, Hp + PotionHealAmount);
         Potions--;
         Console.WriteLine($"du dricker en dryck och återfår {Hp - oldHp} HP.");
     }
