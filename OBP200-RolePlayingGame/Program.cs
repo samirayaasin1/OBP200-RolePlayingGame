@@ -1,5 +1,6 @@
 ﻿using System.Text;
 
+
 namespace OBP200_RolePlayingGame;
 
 
@@ -111,7 +112,7 @@ class Program
         Player[10] = "Wooden Sword;Cloth Armor"; // inventory som semicolon-separerad sträng
         
         // Ny kod (Samira)
-        player = new Player(hp, maxhp, potions);
+        player = new Player(maxhp, hp, potions);
             
         // Initiera karta (linjärt äventyr)
         Rooms.Clear();
@@ -234,6 +235,10 @@ class Program
             {
 
                 player.UsePotion();
+
+                Player[2] = player.Hp.ToString();
+                Player[9] = player.Potions.ToString();
+
             }
             else if (cmd == "R" && !isBoss)
             {
