@@ -3,33 +3,34 @@ namespace OBP200_RolePlayingGame;
 public class Player
 {
     public int MaxHp { get; private set; }
-    public int Hp { get; private set; }
-    public int Potions { get; private set; }
+    public int Hp { get; set; }
 
-    private const int PotionHealAmount = 12;
+    public int Atk { get; set; }
+    public int Def { get; set; }
+    public int Gold { get; set; }
+    public int Xp { get; set; }
+    public int Level { get; set; }
 
-    public Player(int maxHP, int hp, int potions)
+
+    public List<IItem> Inventory { get; private set; } = new List<IItem>();
+
+    public Player(int maxHp, int hp, int atk, int def, int gold)
     {
-        MaxHp = maxHP;
+        MaxHp = maxHp;
         Hp = hp;
-        Potions = potions;
+        Atk = atk;
+        Def = def;
+        Gold = gold;
+        Xp = 0;
+        Level = 1;
     }
 
-    public void UsePotion()
+    public void UseItem(IItem item)
     {
-        if (Potions <= 0)
-        {
-            Console.WriteLine("du har inga drycker kvar.");
-            return;
-        }
-
-        int oldHp = Hp;
-
-        Hp = Math.Min(MaxHp, Hp + PotionHealAmount);
-        Potions--;
-        Console.WriteLine($"du dricker en dryck och återfår {Hp - oldHp} HP.");
+        item.Use(this);
+        Inventory.Remove(item);
     }
 }
-
+   
     
 
