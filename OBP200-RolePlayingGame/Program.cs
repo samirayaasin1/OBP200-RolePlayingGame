@@ -12,7 +12,7 @@ class Program
 
     // Spelarens "databas": alla värden som strängar
     // index: 0 Name, 1 Class, 2 HP, 3 MaxHP, 4 ATK, 5 DEF, 6 GOLD, 7 XP, 8 LEVEL, 9 POTIONS, 10 INVENTORY (semicolon-sep)
-    static string[] Player = new string[11];
+    
 
     // Rum: [type, label]
     // types: battle, treasure, shop, rest, boss
@@ -102,18 +102,13 @@ class Program
                 break;
         }
 
-        // Fyll player-array
-        Player[0] = name;
-        Player[1] = cls;
-        Player[4] = atk.ToString();
-        Player[5] = def.ToString();
-        Player[6] = gold.ToString();
-        Player[7] = "0";   // XP
-        Player[8] = "1";   // LEVEL
-        Player[10] = "Wooden Sword;Cloth Armor"; // inventory som semicolon-separerad sträng
+        player = new Player(maxhp, hp, atk, def, gold);
         
-        // Ny kod (Samira)
-        player = new Player(maxhp, hp, potions);
+        // start-items
+        player.Inventory.Add(new Potion());
+        player.Inventory.Add(new Potion());
+        
+       
             
         // Initiera karta (linjärt äventyr)
         Rooms.Clear();
@@ -644,6 +639,7 @@ class Program
         {
             int value = Convert.ToInt32(s);
             return value;
+            
         }
         catch (Exception e)
         {
