@@ -4,10 +4,10 @@ namespace OBP200_RolePlayingGame
     {
         private const int HealAmount = 12;
 
-        public void Use(Player player)
+        public void Use(IPlayer player)
         {
             int oldHp = player.Hp;
-            player.Hp = Math.Min(player.MaxHp, player.Hp + HealAmount);
+            player.Heal(HealAmount);
 
             Console.WriteLine($"Du dricker en dryck och återfår {player.Hp - oldHp} HP.");
         }

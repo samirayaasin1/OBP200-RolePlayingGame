@@ -1,9 +1,11 @@
 namespace OBP200_RolePlayingGame;
 
-public class Player
+public class Player : IPlayer
 {
+    public string Name { get; set; }
+    public string Class { get; set; }
     public int MaxHp { get; private set; }
-    public int Hp { get; set; }
+    public int Hp { get; private set; }
 
     public int Atk { get; set; }
     public int Def { get; set; }
@@ -30,7 +32,24 @@ public class Player
         item.Use(this);
         Inventory.Remove(item);
     }
+    public void TakeDamage(int damage)
+    {
+        Hp -= damage;
+        if (Hp < 0) Hp = 0;
+    }
+
+    public void Heal(int amount)
+    {
+        Hp = Math.Min(MaxHp, Hp + amount);
+    }
+
+    public void IncreaseMaxHp(int amount)
+    {
+        MaxHp += amount;
+    }
+
 }
-   
+
+
     
 

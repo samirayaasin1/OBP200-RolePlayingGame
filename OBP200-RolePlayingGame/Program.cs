@@ -175,21 +175,24 @@ class Program
             Console.WriteLine();
         }
     }
-
-    // ======= Rumshantering =======
+    // ======= Rumshantering ======
 
     static bool EnterRoom(string type)
     {
         switch ((type ?? "battle").Trim())
         {
             case "battle":
-                return DoBattle(isBoss: false);
+                return DoBattle(false);
+
             case "boss":
-                return DoBattle(isBoss: true);
+                return DoBattle(true);
+
             case "treasure":
                 return DoTreasure();
+
             case "shop":
                 return DoShop();
+
             case "rest":
                 return DoRest();
             default:
@@ -197,6 +200,7 @@ class Program
                 return true;
         }
     }
+    
 
     // ======= Strid =======
 
@@ -421,10 +425,7 @@ class Program
 
     static void ApplyDamageToPlayer(int dmg)
     {
-        player.Hp -= Math.Max(0, dmg);
-
-        if (player.Hp < 0)
-            player.Hp = 0;
+        player.TakeDamage(dmg);
     }
 
     static bool TryRunAway()
@@ -472,24 +473,24 @@ class Program
             switch (cls)
             {
                 case "Warrior":
-                    player.MaxHp += 6;
+                    player.IncreaseMaxHp(6);
                     player.Atk += 2;
                     player.Def += 2;
                     break;
                 case "Mage":
-                    player.MaxHp += 4;
+                    player.IncreaseMaxHp(4);
                     player.Atk += 4;
                     player.Def += 1;
                     break;
                 case "Rogue":
-                    player.MaxHp += 5;
+                    player.IncreaseMaxHp(5);
                     player.Atk += 3;
                     player.Def += 1;
                     break;
               
             }
 
-            player.Hp = player.MaxHp;
+            player.Heal(player.MaxHp);
             
 
             Console.WriteLine($"Du når nivå {player.Level}! HP återställd.");
@@ -531,7 +532,7 @@ class Program
         while (true)
         {
             int potionCount = player.Inventory.OfType<Potion>().Count();
-            Console.WriteLine($"Guld; {player.Gold} | Potions; {potionCount} ");
+            Console.WriteLine($"Guld: {player.Gold} | Potions; {potionCount} ");
             
             Console.WriteLine("1) Köp dryck (10 guld)");
             Console.WriteLine("2) Köp vapen (+2 ATK) (25 guld)");
@@ -584,7 +585,7 @@ class Program
     static bool DoRest()
     {
         Console.WriteLine("Du slår läger och vilar.");
-        player.Hp = player.MaxHp;
+        player.Heal(player.MaxHp);
         Console.WriteLine("HP återställt till max.");
         return true;
     }
@@ -614,6 +615,7 @@ class Program
             return value;
             
         }
+        
         catch (Exception e)
         {
             return fallback;
